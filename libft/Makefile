@@ -25,7 +25,17 @@ SRC = ./ft_atoi.c ./ft_bzero.c ./ft_isalnum.c ./ft_isalpha.c ./ft_isascii.c \
 ./ft_strnew.c ./ft_strnstr.c ./ft_strrchr.c ./ft_strsplit.c ./ft_strstr.c \
 ./ft_strsub.c ./ft_strtrim.c ./ft_tolower.c ./ft_toupper.c ./ft_inoder.c \
 ./ft_lstaddlast.c ./ft_lstsortcontent.c ./ft_preorder.c ./ft_str_gather.c \
-./get_next_line.c 
+./get_next_line.c ./ft_addletter.c ./ft_strjoin_freemem.c \
+
+SRC_PRNTF = ft_printf/ft_printf.c ft_printf/ft_find_params.c \
+ft_printf/ft_converse.c \
+ft_printf/ft_itoa_base.c ft_printf/ft_converse_numb.c ft_printf/ft_make_flag.c \
+ft_printf/ft_print_num.c ft_printf/ft_sizes_l_z.c \
+ft_printf/ft_make_unicode_char.c ft_printf/ft_pars.c ft_printf/ft_pars_extra_f.c\
+ft_printf/ft_converse_extra_f.c ft_printf/ft_sizes_h_hh.c \
+ft_printf/ft_make_flag_minus.c ft_printf/ft_make_flag_minus_adl.c \
+ft_printf/ft_finish_flags.c ft_printf/ft_set_flags.c
+
 
 SRCO = ./ft_atoi.o ./ft_bzero.o ./ft_isalnum.o ./ft_isalpha.o ./ft_isascii.o \
 ./ft_isdigit.o ./ft_isprint.o ./ft_itoa.o ./ft_lstadd.o ./ft_lstdel.o \
@@ -40,27 +50,34 @@ SRCO = ./ft_atoi.o ./ft_bzero.o ./ft_isalnum.o ./ft_isalpha.o ./ft_isascii.o \
 ./ft_strnew.o ./ft_strnstr.o ./ft_strrchr.o ./ft_strsplit.o ./ft_strstr.o \
 ./ft_strsub.o ./ft_strtrim.o ./ft_tolower.o ./ft_toupper.o ./ft_inoder.o \
 ./ft_lstaddlast.o ./ft_lstsortcontent.o ./ft_preorder.o ./ft_str_gather.o \
-./get_next_line.o 
+./get_next_line.o ./ft_addletter.o ./ft_strjoin_freemem.o \
+
+SRCO_PRNTF = ft_printf.o ft_find_params.o \
+ft_converse.o ft_itoa_base.o ft_converse_numb.o ft_make_flag.o \
+ft_print_num.o ft_sizes_l_z.o \
+ft_make_unicode_char.o ft_pars.o ft_pars_extra_f.o\
+ft_converse_extra_f.o ft_sizes_h_hh.o ft_make_flag_minus.o \
+ft_make_flag_minus_adl.o \
+ft_finish_flags.o ft_set_flags.o
+
 
 CC = gcc
 
 FLAGS = -Wall -Werror -Wextra
 
-INC = ./includes/libft.h
+INC = ./includes/libft.h ./ft_printf/ft_printf.h ./includes/get_next_line.h
 
 all: $(NAME)
 
-$(NAME): $(SRCO)
-	ar rc $(NAME) $(SRCO)
-	ranlib $(NAME)
-
-%.o : %.c
-	@$(CC) -c $(FLAGS) $< -I ./includes/ -I $(INC)
+$(NAME):
+	@$(CC) -c $(FLAGS) $(SRC) $(SRC_PRNTF) -I $(INC)
+	@ar rc $(NAME) $(SRCO) $(SRCO_PRNTF)
+	@ranlib $(NAME)
 
 clean:
-	/bin/rm -rf $(SRCO)
+	@/bin/rm -rf $(SRCO) $(SRCO_PRNTF)
 
 fclean: clean
-	/bin/rm -rf $(NAME)
+	@/bin/rm -rf $(NAME)
 
 re: fclean $(NAME)
